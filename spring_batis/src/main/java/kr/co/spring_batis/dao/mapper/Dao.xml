@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="kr.co.spring_batis.dao.Dao">  
+  <insert id="write"> <!-- //param 이용하는 방식 -->
+    INSERT INTO MEMBER(NAME, AGE, PHONE, WRITEDAY) VALUES(#{param1},#{param2},#{param3},now())
+  </insert>
+   <insert id="write2" parameterType="kr.co.spring_batis.dto.Dto"> <!--  // Dto 이용하는 방식 -->
+    INSERT INTO MEMBER(NAME, AGE, PHONE, WRITEDAY) VALUES(#{name},#{age},#{phone},now())
+  </insert>
+  <select id="list" resultType="kr.co.spring_batis.dto.Dto">
+   SELECT * FROM MEMBER ORDER BY ID DESC
+  </select>
+  <select id="content" resultType="kr.co.spring_batis.dto.Dto">
+   SELECT * FROM MEMBER WHERE ID=#{param1}
+  </select>
+  <select id="list_cnt" resultType="int">  <!-- resultType = 리턴 타입 -->
+    SELECT COUNT(*) FROM MEMBER
+  </select>
+  <delete id="delete">
+    DELETE FROM MEMBER WHERE ID=#{param1}
+  </delete>
+  <select id="update" resultType="kr.co.spring_batis.dto.Dto">
+    SELECT * FROM MEMBER WHERE ID=#{param1}
+  </select>
+  <update id="update_ok" parameterType="kr.co.spring_batis.dto.Dto" >
+    UPDATE MEMBER SET NAME=#{name}, AGE=${age}, PHONE=#{phone} WHERE ID=${id}
+    <!-- # =>문자(앞뒤로 ""들어가는 효과), $ -> 숫자 
+    ex) #{aa} like => 'name' like
+        ${aa} like => name like   -->
+  </update>
+</mapper>
